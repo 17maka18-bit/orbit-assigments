@@ -1,0 +1,148 @@
+/* მთლიანი გვერდის დაცენტრება */
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+}
+
+/* მთავარი მენიუს კონტეინერი */
+.menu {
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  display: grid;
+  place-items: center;
+  --orbit-radius: calc(0.5 * (var(--avatar-size) + var(--item-size)) + var(--orbit-spacing));
+}
+
+/* ცენტრალური ავატარი */
+.avatar {
+  grid-area: 1 / -1;
+  background-color: #162a4c;
+  color: #fff;
+  border-radius: calc(0.31 * var(--size));
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  display: grid;
+  place-items: center;
+  z-index: 10;
+  cursor: pointer;
+}
+
+/* ორბიტის კონტეინერი */
+.orbit {
+  grid-area: 1 / -1;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  pointer-events: none;
+  animation: orbit linear var(--orbit-dur) var(--orbit-delay) both infinite;
+}
+
+/* ორბიტის თითოეული ელემენტი */
+.orbit li {
+  grid-area: 1 / -1;
+  position: absolute;
+  bottom: var(--orbit-radius);
+  transform-origin: 50% calc(50% + var(--orbit-radius));
+  transform: rotate(calc(-1 * var(--angle) + var(--orbit-phase)));
+  pointer-events: auto;
+}
+
+/* Counter-Orbit (საპირისპირო ბრუნვა) */
+.item-wrap {
+  animation: counter-orbit linear var(--orbit-dur) var(--orbit-delay) both infinite;
+}
+
+/* აიქონების ვიზუალი და ზომები */
+.item {
+  width: var(--item-size);
+  height: var(--item-size);
+  background: #1e3a8a;
+  color: #fff;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  position: relative;
+  animation: throbbing 2s ease-in-out infinite;
+  animation-delay: calc(var(--pos) * 0.15s);
+  transition: transform 0.3s ease;
+}
+
+/* მთავარი ორბიტის ანიმაცია */
+@keyframes orbit {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* საპირისპირო ბრუნვის ანიმაცია */
+@keyframes counter-orbit {
+  from {
+    transform: rotate(calc(0deg + var(--angle) - var(--orbit-phase)));
+  }
+  to {
+    transform: rotate(calc(-360deg + var(--angle) - var(--orbit-phase)));
+  }
+}
+
+/* პულსაციის ანიმაცია */
+@keyframes throbbing {
+  0%, 100% {
+    transform: scale(0.95);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* ჰოვერზე ბრუნვის შეჩერება */
+.orbit:hover,
+.orbit:hover .item-wrap,
+.item:hover {
+  animation-play-state: paused;
+}
+
+/* Tooltip-ის გამოჩენა */
+.item::after {
+  content: attr(data-category);
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%) scale(0.8);
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  padding: 4px 8px;
+  font-size: 11px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.item:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+.item:hover {
+  transform: translateY(-2.65em);
+}
+
+/* ავატარზე ჰოვერის დროს ორბიტის გაფართოება */
+.avatar:hover ~ .orbit {
+  --orbit-spacing: 6em;
+}
