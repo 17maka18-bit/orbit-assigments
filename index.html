@@ -1,66 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ka">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CSS-only orbiting menu with counter-rotation and hover interactions.">
   <title>CSS Orbiting Menu</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <main class="page">
+    <p class="eyebrow">CSS ANIMATION ASSIGNMENT</p>
+    <h1>Orbiting Menu</h1>
+    <p class="intro">მაუსი მიიტანე ავატარზე ან რომელიმე აიქონზე.</p>
 
-  <!-- მთავარი მენიუს კონტეინერი -->
-  <div class="menu" style="--size: 400px; --avatar-size: 100px; --item-size: 50px; --orbit-spacing: 4em; --orbit-dur: 25s; --orbit-delay: 0s; --orbit-items: 8;">
-    
-    <!-- ცენტრალური ავატარი -->
-    <div class="avatar">
-      <span>Core</span>
+    <div class="menu" style="--size: 400px; --avatar-size: 100px; --item-size: 50px; --orbit-spacing: 4em; --orbit-dur: 25s; --orbit-delay: 0s; --orbit-items: 8;">
+      <div class="avatar" aria-label="ცენტრალური ავატარი">
+        <span class="avatar-icon">✦</span>
+        <span class="avatar-label">CORE</span>
+      </div>
+
+      <ul class="orbit" aria-label="ტექნოლოგიების კატეგორიები">
+        <li style="--pos: 0; --angle: calc(0 * var(--orbit-step)); --orbit-phase: 0deg;">
+          <div class="item-wrap"><div class="item item-cyan" data-category="HTML / CSS"><span>🌐</span></div></div>
+        </li>
+        <li style="--pos: 1; --angle: calc(1 * var(--orbit-step)); --orbit-phase: 0deg;">
+          <div class="item-wrap"><div class="item item-yellow" data-category="JavaScript"><span>⚡</span></div></div>
+        </li>
+        <li style="--pos: 2; --angle: calc(2 * var(--orbit-step)); --orbit-phase: 0deg;">
+          <div class="item-wrap"><div class="item item-violet" data-category="React"><span>⚛</span></div></div>
+        </li>
+        <li style="--pos: 3; --angle: calc(3 * var(--orbit-step)); --orbit-phase: 0deg;">
+          <div class="item-wrap"><div class="item item-green" data-category="Node.js"><span>●</span></div></div>
+        </li>
+        <li style="--pos: 4; --angle: calc(4 * var(--orbit-step)); --orbit-phase: 0deg;">
+          <div class="item-wrap"><div class="item item-pink" data-category="Git"><span>⑂</span></div></div>
+        </li>
+        <li style="--pos: 5; --angle: calc(5 * var(--orbit-step)); --orbit-phase: 0deg;">
+          <div class="item-wrap"><div class="item item-orange" data-category="Design"><span>🎨</span></div></div>
+        </li>
+        <li style="--pos: 6; --angle: calc(6 * var(--orbit-step)); --orbit-phase: 0deg;">
+          <div class="item-wrap"><div class="item item-blue" data-category="Database"><span>▤</span></div></div>
+        </li>
+        <li style="--pos: 7; --angle: calc(7 * var(--orbit-step)); --orbit-phase: 0deg;">
+          <div class="item-wrap"><div class="item item-red" data-category="Security"><span>🔒</span></div></div>
+        </li>
+      </ul>
     </div>
 
-    <!-- ორბიტა და მისი ელემენტები -->
-    <ul class="orbit">
-      <li style="--pos: 0; --angle: calc(0 * (360deg / var(--orbit-items))); --orbit-phase: 0deg;">
-        <div class="item-wrap">
-          <div class="item" data-category="HTML/CSS">🌐</div>
-        </div>
-      </li>
-      <li style="--pos: 1; --angle: calc(1 * (360deg / var(--orbit-items))); --orbit-phase: 0deg;">
-        <div class="item-wrap">
-          <div class="item" data-category="JavaScript">⚡</div>
-        </div>
-      </li>
-      <li style="--pos: 2; --angle: calc(2 * (360deg / var(--orbit-items))); --orbit-phase: 0deg;">
-        <div class="item-wrap">
-          <div class="item" data-category="React">⚛️</div>
-        </div>
-      </li>
-      <li style="--pos: 3; --angle: calc(3 * (360deg / var(--orbit-items))); --orbit-phase: 0deg;">
-        <div class="item-wrap">
-          <div class="item" data-category="Node.js">🟢</div>
-        </div>
-      </li>
-      <li style="--pos: 4; --angle: calc(4 * (360deg / var(--orbit-items))); --orbit-phase: 0deg;">
-        <div class="item-wrap">
-          <div class="item" data-category="Git">🐙</div>
-        </div>
-      </li>
-      <li style="--pos: 5; --angle: calc(5 * (360deg / var(--orbit-items))); --orbit-phase: 0deg;">
-        <div class="item-wrap">
-          <div class="item" data-category="Design">🎨</div>
-        </div>
-      </li>
-      <li style="--pos: 6; --angle: calc(6 * (360deg / var(--orbit-items))); --orbit-phase: 0deg;">
-        <div class="item-wrap">
-          <div class="item" data-category="Database">🗄️</div>
-        </div>
-      </li>
-      <li style="--pos: 7; --angle: calc(7 * (360deg / var(--orbit-items))); --orbit-phase: 0deg;">
-        <div class="item-wrap">
-          <div class="item" data-category="Security">🔒</div>
-        </div>
-      </li>
-    </ul>
-
-  </div>
-
+    <p class="hint">HOVER TO PAUSE <span>•</span> HOVER CORE TO EXPAND</p>
+  </main>
 </body>
 </html>
