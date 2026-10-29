@@ -1,325 +1,184 @@
-
-:root {
-  color-scheme: dark;
-  --page-bg: #080d19;
-  --text: #eef4ff;
-  --muted: #94a5c4;
-}
-
-* {
-  box-sizing: border-box;
-}
-
 body {
   margin: 0;
   min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: 24px 16px;
-  overflow-x: hidden;
-  color: var(--text);
-  font-family: system-ui, sans-serif;
-  background: radial-gradient(
-    ellipse at 50% 45%,
-    #14213b 0%,
-    var(--page-bg) 65%
-  );
+  background-color: #070b14;
+  color: #ffffff;
+  font-family: system-ui, -apple-system, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
-.page {
-  width: min(100%, 760px);
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
 }
 
-.eyebrow {
-  margin: 0 0 8px;
-  color: #70d8ff;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.22em;
+.header-text {
+  margin-bottom: 20px;
+}
+
+.sub-title {
+  color: #38bdf8;
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  font-weight: 700;
 }
 
 h1 {
+  margin: 4px 0;
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+p {
+  color: #94a3b8;
+  font-size: 0.8rem;
   margin: 0;
-  font-size: clamp(2rem, 6vw, 3.4rem);
-  letter-spacing: -0.045em;
 }
 
-.intro {
-  margin: 10px 0 0;
-  color: var(--muted);
-  font-size: 0.95rem;
+.hint {
+  margin-top: 25px;
+  font-size: 0.65rem;
+  letter-spacing: 1.5px;
+  color: #64748b;
 }
 
-/* მთავარი მენიუ */
+/* მთავარი კონტეინერი */
 .menu {
-  --orbit-step: calc(360deg / var(--orbit-items));
-
-  width: min(var(--size), calc(100vw - 32px));
-  aspect-ratio: 1;
   position: relative;
-  display: grid;
-  place-items: center;
-  margin: 28px auto 18px;
-  isolation: isolate;
+  width: var(--size);
+  height: var(--size);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* ცენტრალური CORE */
+/* ცენტრალური ავატარი */
 .avatar {
-  z-index: 2;
-  grid-area: 1 / 1;
+  position: absolute;
   width: var(--avatar-size);
   height: var(--avatar-size);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  color: #f5fbff;
-  background: #162a4c;
-  border: 1px solid #4ecbff;
+  background: radial-gradient(circle, #1e3a8a 0%, #0f172a 100%);
+  border: 2px solid rgba(56, 189, 248, 0.4);
   border-radius: 50%;
-  box-shadow:
-    0 0 0 8px rgb(55 161 255 / 5%),
-    0 0 34px rgb(43 172 255 / 18%);
-  transition: box-shadow 300ms ease, transform 300ms ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
   cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
-.avatar-icon {
-  font-size: 1.8rem;
-  line-height: 1;
-  color: #72ddff;
+.core-text {
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  font-weight: bold;
+  color: #38bdf8;
 }
 
-.avatar-label {
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.2em;
-}
-
-/* ორბიტის წრე */
+/* ორბიტის პუნქტირიანი ხაზი */
 .orbit {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  border: 1px dashed #34415a;
+  width: calc(2 * var(--orbit-radius));
+  height: calc(2 * var(--orbit-radius));
+  border: 1px dashed rgba(255, 255, 255, 0.25);
   border-radius: 50%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
   animation: orbit var(--orbit-dur) linear infinite;
 }
 
-/* აიქონები წრეწირზე */
+/* თითოეული ელემენტი ორბიტაზე */
 .orbit li {
   position: absolute;
-  left: 50%;
   top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  transform: rotate(calc(var(--pos) * (360deg / var(--orbit-items)))) translateY(calc(-1 * var(--orbit-radius)));
+}
+
+/* საპირისპირო ბრუნვა, რომ აიქონი არ გადმოტრიალდეს */
+.item-wrap {
+  position: absolute;
+  top: calc(-1 * var(--item-size) / 2);
+  left: calc(-1 * var(--item-size) / 2);
   width: var(--item-size);
   height: var(--item-size);
-  margin-left: calc(var(--item-size) / -2);
-  margin-top: calc(var(--item-size) / -2);
-
-  transform:
-    rotate(var(--angle))
-    translateY(calc(var(--size) / -2 + var(--item-size) / 2))
-    rotate(calc(-1 * var(--angle)));
-}
-
-/* ორბიტის მოძრაობა */
-@keyframes orbit {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* აიქონები სწორად რჩება */
-.item-wrap {
-  width: 100%;
-  height: 100%;
   animation: counter-orbit var(--orbit-dur) linear infinite;
 }
 
-@keyframes counter-orbit {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(-360deg);
-  }
-}
-
-/* აიქონების სტილი */
+/* აიქონის ვიზუალი */
 .item {
-  position: relative;
   width: 100%;
   height: 100%;
-  display: grid;
-  place-items: center;
-  border: 2px solid rgb(255 255 255 / 72%);
   border-radius: 50%;
-  color: #08111f;
-  font-size: 1.45rem;
-  font-weight: 800;
-  box-shadow:
-    0 5px 18px rgb(0 0 0 / 28%),
-    inset 0 0 0 3px rgb(255 255 255 / 12%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  color: #0f172a;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
   cursor: pointer;
-  animation: throbbing calc(1s + var(--pos) * 0.15s)
-    ease-in-out infinite alternate;
+  position: relative;
 }
 
-.item span {
-  display: block;
-  transition: transform 250ms ease;
+/* ანიმაციები */
+@keyframes orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
-.item-cyan {
-  background: #9be8f3;
+@keyframes counter-orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
 }
 
-.item-yellow {
-  background: #ffe07b;
+/* ჰოვერზე შეჩერება */
+.orbit:hover,
+.orbit:hover .item-wrap,
+.item:hover {
+  animation-play-state: paused;
 }
 
-.item-violet {
-  background: #c8a8ff;
-}
-
-.item-green {
-  background: #a9f0b1;
-}
-
-.item-pink {
-  background: #ff9bb3;
-}
-
-.item-orange {
-  background: #ffc477;
-}
-
-.item-blue {
-  background: #9ecbff;
-}
-
-.item-red {
-  background: #ff9b9b;
-}
-
-@keyframes throbbing {
-  from {
-    scale: 0.95;
-  }
-  to {
-    scale: 1.05;
-  }
-}
-
-/* აიქონის სახელის მინიშნება */
+/* Tooltip */
 .item::after {
   content: attr(data-category);
   position: absolute;
+  bottom: 130%;
   left: 50%;
-  top: 0;
-  z-index: 5;
-  padding: 6px 10px;
-  border: 1px solid rgb(126 202 255 / 35%);
-  border-radius: 8px;
-  color: #f5f9ff;
-  background: #101c32;
-  box-shadow: 0 8px 22px rgb(0 0 0 / 35%);
-  font-size: 0.72rem;
-  font-weight: 700;
+  transform: translateX(-50%) scale(0.8);
+  background: rgba(15, 23, 42, 0.95);
+  color: #fff;
+  padding: 4px 8px;
+  font-size: 10px;
+  border-radius: 6px;
   white-space: nowrap;
   opacity: 0;
-  transform: translate(-50%, 0) scale(0.85);
-  transition: opacity 220ms ease, transform 220ms ease;
   pointer-events: none;
-}
-
-.item:hover {
-  z-index: 10;
-}
-
-.item:hover span {
-  transform: translateY(-2.65em);
+  transition: all 0.25s ease;
 }
 
 .item:hover::after {
   opacity: 1;
-  transform: translate(-50%, -2.65em) scale(1);
+  transform: translateX(-50%) scale(1);
 }
 
-/* მაუსის მიტანისას პაუზა */
-.orbit:hover,
-.orbit:hover .item-wrap,
-.orbit:hover .item {
-  animation-play-state: paused;
+.item:hover {
+  transform: scale(1.1);
 }
 
-/* CORE-ის ეფექტი */
+/* ავატარზე ჰოვერის დროს გაფართოება */
+.avatar:hover ~ .orbit {
+  --orbit-radius: 145px;
+}
+
 .avatar:hover {
-  box-shadow:
-    0 0 0 12px rgb(55 161 255 / 8%),
-    0 0 48px rgb(43 172 255 / 35%);
-  transform: scale(1.04);
-}
-
-/* CORE-ზე მიტანისას აიქონები ოდნავ შორდება */
-.menu:has(.avatar:hover) .orbit li {
-  transform:
-    rotate(var(--angle))
-    translateY(calc(var(--size) / -2 - 12px))
-    rotate(calc(-1 * var(--angle)));
-}
-
-.hint {
-  margin: 0;
-  color: #8193b4;
-  font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-}
-
-.hint span {
-  padding: 0 7px;
-  color: #65d9ff;
-}
-
-/* ტელეფონის ეკრანი */
-@media (max-width: 480px) {
-  .menu {
-    --size: min(400px, calc(100vw - 32px)) !important;
-    --avatar-size: 82px !important;
-    --item-size: 43px !important;
-  }
-
-  .item {
-    font-size: 1.2rem;
-  }
-
-  .avatar-label {
-    font-size: 0.62rem;
-  }
-
-  .intro {
-    max-width: 95%;
-  }
-}
-
-/* მოძრაობის შემცირების პარამეტრი */
-@media (prefers-reduced-motion: reduce) {
-  .orbit,
-  .item-wrap,
-  .item {
-    animation-duration: 60s;
-  }
+  transform: scale(1.05);
 }
